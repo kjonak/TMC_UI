@@ -12,6 +12,17 @@ namespace Services.AppSettings
     public partial class AppSettings : ObservableObject
     {
         [ObservableProperty]
+        string _UDP_IP = "0.0.0.0";
+
+        [ObservableProperty]
+        int _UDP_Listen_Port = 5685;
+        [ObservableProperty]
+        int _UDP_Target_Port = 5685;
+
+        [ObservableProperty]
+        int _BaudRate = 115200;
+
+        [ObservableProperty]
         string _StreamIP = "0.0.0.0";
         [ObservableProperty]
         int _StreamPort = 0;

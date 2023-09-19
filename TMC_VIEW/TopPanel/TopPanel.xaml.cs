@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,6 +25,23 @@ namespace TMC_VIEW.TopPanel
         public TopPanel()
         {
             InitializeComponent();
+        }
+        private void COM_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            COM.ItemsSource = SerialPort.GetPortNames();
+        }
+
+        private void IPBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex(@"^-?[0-9]*(?:\.[0-9]*)?$");
+            e.Handled = !regex.IsMatch(e.Text);
+
+        }
+
+        private void BaudRateBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex(@"^?[0-9]");
+            e.Handled = !regex.IsMatch(e.Text);
         }
     }
 }

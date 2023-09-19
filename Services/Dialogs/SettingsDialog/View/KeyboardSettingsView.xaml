@@ -40,7 +40,7 @@
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background">
                                         <Setter.Value>
-                                            <SolidColorBrush Color="{StaticResource SecondaryColor}" Opacity="{StaticResource SurfaceOpacity}"/>
+                                            <SolidColorBrush Color="{DynamicResource SecondaryColor}" Opacity="{StaticResource SurfaceOpacity}"/>
                                         </Setter.Value>
                                     </Setter>
                                 </Trigger>

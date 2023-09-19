@@ -35,7 +35,7 @@
                 <TextBox  Grid.Row="2" Grid.Column="1" Text="{Binding AppSettings.StreamPort}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0 2"/>
 
                 <Label Grid.Row="0" Grid.Column="0" Content="TMC connection type: "/>
-                <ComboBox Name="box"  Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0 2" SelectedIndex="{Binding AppSettings.ConnectionMethod}">
+                <ComboBox Name="box"  Grid.Row="0" Grid.Column="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0 2" SelectedIndex="{Binding AppSettings.ConnectionMethod}" Foreground="Black">
 
                     <!--<i:Interaction.Triggers>
                         <i:EventTrigger EventName="SelectionChanged">
@@ -43,8 +43,8 @@
                         </i:EventTrigger>
                     </i:Interaction.Triggers>-->
 
-                    <ComboBoxItem Content="Serial"/>
-                    <ComboBoxItem Content="UDP" />
+                    <ComboBoxItem Content="Serial" Foreground="Black"/>
+                    <ComboBoxItem Content="UDP" Foreground="Black"/>
                 </ComboBox>
 
 

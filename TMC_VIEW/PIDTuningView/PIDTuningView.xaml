@@ -11,7 +11,7 @@
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <pid:PidBox Background="{DynamicResource SurfaceBrush}" Margin="5"/>
-        <local:PlotsView Grid.Column="1"  Background="{DynamicResource SurfaceBrush}" Margin="5"/>
+        <pid:PidBox Background="{DynamicResource SurfaceBrush}" Margin="5 0"/>
+        <local:PlotsView Grid.Column="1"  Background="{DynamicResource SurfaceBrush}" Margin="5 0"/>
     </Grid>
 </UserControl>

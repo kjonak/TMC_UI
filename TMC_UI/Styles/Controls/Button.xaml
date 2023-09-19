@@ -7,53 +7,116 @@
         <ResourceDictionary Source="ButtonStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
     <Style  TargetType="{x:Type Button}">
-        <Setter Property="Foreground" Value="{StaticResource ButtonForeground}"/>
+
+        <Setter Property="Background" Value="{DynamicResource ButtonBackground}"/>
+        <Setter Property="Foreground" Value="{DynamicResource ButtonForeground}"/>
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Padding" Value="1"/>
         <Setter Property="Template">
 
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
+
                     <ControlTemplate.Resources>
+                        <ResourceDictionary>
+                            <Storyboard x:Key="OnClickAnimation">
+                                <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle">
+                                    <EasingColorKeyFrame KeyTime="0" Value="{StaticResource SecondaryColor}"/>
+                                    <EasingColorKeyFrame KeyTime="0:0:0.4" Value="{StaticResource PrimaryColor}"/>
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
 
-                        <Storyboard x:Key="OnClickAnimation">
-                            <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle">
-                                <EasingColorKeyFrame KeyTime="0" Value="{StaticResource ButtonOnClickColor}"/>
-                                <EasingColorKeyFrame KeyTime="0:0:0.4" Value="{StaticResource ButtonOnHoverColor}"/>
-                            </ColorAnimationUsingKeyFrames>
-                        </Storyboard>
-
+                            <Storyboard x:Key="OnClickAnimationReversedColors">
+                                <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)" Storyboard.TargetName="rectangle">
+                                    <EasingColorKeyFrame KeyTime="0" Value="{StaticResource PrimaryColor}"/>
+                                    <EasingColorKeyFrame KeyTime="0:0:0.4" Value="{StaticResource SecondaryColor}"/>
+                                </ColorAnimationUsingKeyFrames>
+                            </Storyboard>
+                        </ResourceDictionary>
                     </ControlTemplate.Resources>
 
-
                     <Grid>
-                        <Border x:Name="rectangle" CornerRadius="2" BorderThickness="{StaticResource ButtonStrokeThickness}" BorderBrush="{StaticResource ButtonStroke}" Background="{StaticResource ButtonBackground}"/>
-
+                        <Border x:Name="rectangle" CornerRadius="2" BorderThickness="{StaticResource ButtonStrokeThickness}" BorderBrush="{StaticResource ButtonStroke}" Background="{TemplateBinding Background}"/>
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="2"/>
                         <Rectangle x:Name="rectangle_Copy" RadiusY="2" RadiusX="2" StrokeThickness="0" >
                             <Rectangle.Fill>
                                 <SolidColorBrush Color="Transparent"/>
                             </Rectangle.Fill>
                         </Rectangle>
-
                     </Grid>
+
                     <ControlTemplate.Triggers>
 
-                        <Trigger Property="IsMouseOver" Value="true">
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="true"/>
+                                <Condition Property="Background" Value="{StaticResource ButtonBackground}"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter Property="Background" TargetName="rectangle" Value="{DynamicResource ButtonOnHoverBackground}"/>
+                                <Setter Property="BorderBrush" TargetName="rectangle" Value="{DynamicResource ButtonOnHoverStroke}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonOnHoverForeground}"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsPressed" Value="true"/>
+                                <Condition Property="Background" Value="{StaticResource ButtonBackground}"/>
+                            </MultiTrigger.Conditions>
+
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource OnClickAnimation}"/>
+                            </MultiTrigger.EnterActions>
+                        </MultiTrigger>
+
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="true"/>
+                                <Condition Property="Background" Value="{StaticResource SecondaryColorBrush}"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter Property="Background" TargetName="rectangle">
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="{DynamicResource SecondaryColor}" Opacity="{DynamicResource ButtonOnHoverOpacity}"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="BorderBrush" TargetName="rectangle" Value="{DynamicResource ButtonBackground}"/>
+                                <Setter Property="Foreground" Value="{StaticResource ButtonOnHoverForeground}"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsPressed" Value="true"/>
+                                <Condition Property="Background" Value="{StaticResource SecondaryColorBrush}"/>
+                            </MultiTrigger.Conditions>
+
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource OnClickAnimationReversedColors}"/>
+                            </MultiTrigger.EnterActions>
+                        </MultiTrigger>
+
+                        <!--<Trigger Property="IsMouseOver" Value="true">
                             <Setter Property="Background" TargetName="rectangle" Value="{DynamicResource ButtonOnHoverBackground}"/>
                             <Setter Property="BorderBrush" TargetName="rectangle" Value="{DynamicResource ButtonOnHoverStroke}"/>
+                    
                             <Setter Property="Foreground" Value="{StaticResource ButtonOnHoverForeground}"/>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="true">
+                        </Trigger>-->
+
+                        <!--<Trigger Property="IsPressed" Value="true">
                             <Trigger.EnterActions>
                                 <BeginStoryboard Storyboard="{StaticResource OnClickAnimation}"/>
                             </Trigger.EnterActions>
-                        </Trigger>
+                        </Trigger>-->
 
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter TargetName="rectangle_Copy" Property="Fill" Value="{StaticResource ButtonDisabledBrush}"/>
                         </Trigger>
+
                     </ControlTemplate.Triggers>
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -4,19 +4,24 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Data;
 using System.Windows;
+using System.Windows.Data;
 
-namespace TMC_VIEW.Converters
+namespace TMC_VIEW.TopPanel
 {
-    public class BoolToVisibilityReversed : IValueConverter
+    public class ConnectionPanelVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value.GetType() == typeof(bool)) { 
-            return ((bool)value == true) ? Visibility.Collapsed : Visibility.Visible;
+            if(parameter == null)
+            {
+                throw new NotImplementedException();
             }
-            if (value.GetType() == typeof(int))
+            if((string)parameter == "UDP")
+            {
+                return ((int)value == 1) ? Visibility.Visible : Visibility.Collapsed;
+            }
+            else if((string)parameter =="Serial")
             {
                 return ((int)value == 1) ? Visibility.Collapsed : Visibility.Visible;
             }
@@ -24,6 +29,7 @@ namespace TMC_VIEW.Converters
             {
                 throw new NotImplementedException();
             }
+            
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

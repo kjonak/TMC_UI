@@ -5,11 +5,12 @@
              >
     <Application.Resources>
         <ResourceDictionary >
+
             <ResourceDictionary.MergedDictionaries >
-                <ResourceDictionary Source="./Styles/LightTheme.xaml"/>
-                <ResourceDictionary Source="./Styles/ControlStyles.xaml"/>
-                <ResourceDictionary Source="./Styles/Font.xaml"/>
-                <!--<ResourceDictionary Source="./style/ControlsStyle.xaml"/>-->
+                <!--<ResourceDictionary Source="Styles/Style.xaml"/>-->
+                <ResourceDictionary Source="Styles/LightTheme.xaml"/>
+                <ResourceDictionary Source="Styles/ControlStyles.xaml"/>
+                <ResourceDictionary Source="Styles/Font.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
             <BitmapImage x:Key="OkonLogo" UriSource="Images/OKON_LOGO_grey.png" />

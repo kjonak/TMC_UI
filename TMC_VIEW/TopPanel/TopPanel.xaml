@@ -3,36 +3,60 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:TMC_VIEW.TopPanel"
+             xmlns:local="clr-namespace:TMC_VIEW.TopPanel" xmlns:converters="clr-namespace:TMC_VIEW.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <BitmapImage x:Key="SettingsIcon" UriSource="Icons/setup_icon.png"/>
- 
+        <ResourceDictionary>
+            <local:ConnectionPanelVisibilityConverter x:Key="ConnectionPanelVisibilityConverter"/>
+            <BitmapImage x:Key="SettingsIcon" UriSource="Icons/setup_icon.png"/>
+        </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
 
-        <Image Source="{StaticResource OkonLogo}" Height="55"  VerticalAlignment="Center" HorizontalAlignment="Center" RenderOptions.EdgeMode="Aliased" SnapsToDevicePixels="True" Panel.ZIndex="5"/>
+        <Image Source="{DynamicResource OkonLogo}" Height="55"  VerticalAlignment="Center" HorizontalAlignment="Center" RenderOptions.EdgeMode="Aliased" SnapsToDevicePixels="True" Panel.ZIndex="5"/>
 
         <Grid Background="{DynamicResource PrimaryColorBrush}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="2"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
-            <Grid Margin="10 27" Grid.Row="1" Background="Transparent">
+            <Grid Margin="0" Grid.Row="1" Background="Transparent" VerticalAlignment="Top">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" HorizontalAlignment="Left" BorderBrush="Transparent" Background="Transparent" BorderThickness="0" Cursor="Hand" Height="50" Command="{Binding OpenSettingsCommand}">
-                    <Button.Style>
-                        <Style>
-                            
-                        </Style>
-                    </Button.Style>
-                    <Image Source="{StaticResource SettingsIcon}"/>
-                </Button>
+               
+                <Grid Grid.Column="2" Background="Transparent"  VerticalAlignment="Center" HorizontalAlignment="Right">
+                    
+                    <Grid Visibility="{Binding AppSettings.ConnectionMethod, Converter={StaticResource ConnectionPanelVisibilityConverter}, ConverterParameter=UDP}">
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Target IP: "/>
+                            <TextBox Text="{Binding AppSettings.UDP_IP}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="100" Margin="0 1" PreviewTextInput="IPBox_PreviewTextInput"/>
+
+                            <Label Content="Target port: "/>
+                            <TextBox Text="{Binding AppSettings.UDP_Listen_Port}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="50" Margin="0 1" PreviewTextInput="BaudRateBox_PreviewTextInput"/>
+                            <Label Content="Listen port: "/>
+                            <TextBox Text="{Binding AppSettings.UDP_Target_Port}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="50" Margin="0 1" PreviewTextInput="BaudRateBox_PreviewTextInput"/>
+                            <Button Content="Connect" Margin="10 0"   Background="{DynamicResource SecondaryColorBrush}" Height="25" Width="55" Command="{Binding ConnectUDPCommand}"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Visibility="{Binding AppSettings.ConnectionMethod, Converter={StaticResource ConnectionPanelVisibilityConverter}, ConverterParameter=Serial}">
+                        <StackPanel Orientation="Horizontal">
+                            <Label Content="Port:"/>
+                            <ComboBox VerticalAlignment="Center" Margin="5 0" Grid.Column="1" Width="100" Name="COM" PreviewMouseLeftButtonDown ="COM_MouseLeftButtonDown" />
+                           
+                            <Label Content="Baud rate: "/>
+                            <TextBox Text="{Binding AppSettings.BaudRate}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="50" Margin="0 1" PreviewTextInput="BaudRateBox_PreviewTextInput"/>
+                            <Button Content="Connect" Margin="10 0"   Background="{DynamicResource SecondaryColorBrush}" Height="25" Width="55" Command="{Binding ConnectSerialCommand}" CommandParameter="{Binding ElementName=COM, Path=SelectedValue}"/>
+
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+                <Button Content="App settings" Grid.Column="3" Background="{DynamicResource SecondaryColorBrush}" Height="25" Width="100" Margin="0 0 100 0"  Command="{Binding OpenSettingsCommand}"/>
             </Grid>
         </Grid>
 
