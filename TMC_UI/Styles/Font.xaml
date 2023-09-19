@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+
+    <sys:Double x:Key="HeaderFontSize">15</sys:Double>
+    <FontWeight x:Key="HeaderFontWeight">Regular</FontWeight>
+    
+    <sys:Double x:Key="TitleFontSize">20</sys:Double>
+    <FontWeight x:Key="TitleFontWeight">Bold</FontWeight>
+
+</ResourceDictionary>

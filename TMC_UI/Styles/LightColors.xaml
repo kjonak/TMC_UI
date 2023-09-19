@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <Color  x:Key="BackgroundColor">#03071e</Color>
+    <Color x:Key="PrimaryColor">#219ebc</Color>
+    <Color x:Key="SecondaryColor">#fb8500</Color>
+    <Color x:Key="ForegroundColor">White</Color>
+    <sys:Double x:Key="SurfaceOpacity">0.2</sys:Double>
+
+
+</ResourceDictionary>

@@ -1,0 +1,80 @@
+﻿<UserControl x:Class="Services.Dialogs.SettingsDialog.View.KeyboardSettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Services.Dialogs.SettingsDialog.View" 
+             xmlns:appsettings="clr-namespace:Services.AppSettings" 
+             d:DataContext="{d:DesignInstance Type=appsettings:ControllersSettings}"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <local:IndexConverter x:Key="IndexConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Label Content="Keyboard settings" FontSize="{DynamicResource TitleFontSize}" FontWeight="{DynamicResource TitleFontWeight}"/>
+
+        <Grid Grid.Row="1">
+            <Grid Margin="5">
+                <ListView x:Name="lv" ItemsSource="{Binding AppSettings.ControllersSettings.KeyboardAssignment}" Background="Transparent" BorderBrush="Transparent" SelectionChanged="ListView_SelectionChanged" PreviewKeyDown="ListView_PreviewKeyDown">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="BorderBrush" Value="Transparent"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+
+                                        <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                            <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+                                        </Border>
+
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background">
+                                        <Setter.Value>
+                                            <SolidColorBrush Color="{StaticResource SecondaryColor}" Opacity="{StaticResource SurfaceOpacity}"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsSelected" Value="true" />
+                                        <Condition Property="Selector.IsSelectionActive" Value="true" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Background">
+                                        <Setter.Value>
+                                            <SolidColorBrush Color="{StaticResource SecondaryColor}" Opacity="0.4"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </MultiTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid >
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="69"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label  Content="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                         AncestorType={x:Type ListViewItem}}, 
+                                         Converter={StaticResource IndexConverter}}"/>
+                                <Label Name="ValueLabel" HorizontalContentAlignment="Center" Grid.Column="1" Content="{Binding}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+            </ListView>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

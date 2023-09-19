@@ -1,0 +1,30 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="TopPanel\Icons\icon_connected.png" />
+    <None Remove="TopPanel\Icons\icon_notconnected.png" />
+    <None Remove="TopPanel\Icons\setup_icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+    <PackageReference Include="OxyPlot.Wpf" Version="2.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TMC_VIEW_MODEL\TMC_VIEW_MODEL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="TopPanel\Icons\icon_connected.png" />
+    <Resource Include="TopPanel\Icons\icon_notconnected.png" />
+    <Resource Include="TopPanel\Icons\setup_icon.png" />
+  </ItemGroup>
+
+</Project>

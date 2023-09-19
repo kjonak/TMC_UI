@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Images\OKON_LOGO_grey.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TMC_MODEL\TMC_API.csproj" />
+    <ProjectReference Include="..\TMC_VIEW\TMC_VIEW.csproj" />
+    <ProjectReference Include="..\TMC_VIEW_MODEL\TMC_VIEW_MODEL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\OKON_LOGO_grey.png" />
+  </ItemGroup>
+
+</Project>
