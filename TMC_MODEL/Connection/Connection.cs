@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,9 @@ namespace TMC_API.Connection
 {
     public partial class Connection : ObservableObject
     {
-        [ObservableProperty]
-        bool _IsConnected = false;
+        
+        private bool _IsConnected = false;
+        public bool IsConnected {  get {  return _IsConnected; } protected set { _IsConnected = value; OnPropertyChanged("IsConnected"); } }
 
         private List<Action<byte[]>> callbacks = new List<Action<byte[]>>();
         public virtual void SendPacket(byte[] data)

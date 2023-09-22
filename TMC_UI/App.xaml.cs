@@ -19,7 +19,7 @@ namespace TMC_UI
         protected override void OnStartup(StartupEventArgs e)
         {
             
-            AppSettings? appSettings = AppSettings.Read("test.xaml");
+            AppSettings? appSettings = AppSettings.Read("AppSettings.xaml");
             if(appSettings == null)
             {
                 appSettings = new AppSettings();

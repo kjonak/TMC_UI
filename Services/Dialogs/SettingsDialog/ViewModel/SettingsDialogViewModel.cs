@@ -19,8 +19,8 @@ namespace Services.Dialogs.SettingsDialog.ViewModel
         [RelayCommand]
         void Save()
         {
-            Console.WriteLine("Saving settings");
-            AppSettings.Save("test.xaml");
+            Console.WriteLine("Saving settings to AppSettings.xaml");
+            AppSettings.Save("AppSettings.xaml");
         }
         public SettingsDialogViewModel(AppSettings.AppSettings appSettings) 
         {

@@ -38,9 +38,9 @@
                             <TextBox Text="{Binding AppSettings.UDP_IP}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="100" Margin="0 1" PreviewTextInput="IPBox_PreviewTextInput"/>
 
                             <Label Content="Target port: "/>
-                            <TextBox Text="{Binding AppSettings.UDP_Listen_Port}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="50" Margin="0 1" PreviewTextInput="BaudRateBox_PreviewTextInput"/>
-                            <Label Content="Listen port: "/>
                             <TextBox Text="{Binding AppSettings.UDP_Target_Port}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="50" Margin="0 1" PreviewTextInput="BaudRateBox_PreviewTextInput"/>
+                            <Label Content="Listen port: "/>
+                            <TextBox Text="{Binding AppSettings.UDP_Listen_Port}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="50" Margin="0 1" PreviewTextInput="BaudRateBox_PreviewTextInput"/>
                             <Button Content="Connect" Margin="10 0"   Background="{DynamicResource SecondaryColorBrush}" Height="25" Width="55" Command="{Binding ConnectUDPCommand}"/>
                         </StackPanel>
                     </Grid>

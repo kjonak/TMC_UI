@@ -43,9 +43,10 @@ namespace TMC_API
         public static byte MSG_FROM_OKON_SERVICE_CONFIRM = 0x3;
     }
 
-    internal static class Protocol
+    public static class Protocol
     {
-         static byte[] CreateMsg(byte msg_type, byte[] data)
+        
+        public static byte[] CreateMsg(byte msg_type, byte[] data)
         {
 
 
@@ -65,13 +66,13 @@ namespace TMC_API
             msg[3] = (byte)(len);
             msg[4] = msg_type;
            
-            UInt16 checksum = CalculateChecksum(msg, 0, len + 5);
+            UInt16 checksum = CalculateChecksum(msg,  len + 5);
             msg[len + 5] = (byte)(checksum >> 8);
             msg[len + 6] = (byte)(checksum);
             return msg;
         }
 
-        internal static ushort CalculateChecksum(byte[] data, int offset, int length)
+        public static ushort CalculateChecksum(byte[] data, int length)
         {
             byte x;
             ushort crc = 0xFFFF;
@@ -84,6 +85,7 @@ namespace TMC_API
                 x ^= (byte)(x >> 4);
                 crc = (ushort)((crc << 8) ^ ((ushort)(x << 12)) ^ ((ushort)(x << 5)) ^ ((ushort)x));
             }
+
             return crc;
         }
     }

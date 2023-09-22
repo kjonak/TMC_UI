@@ -25,8 +25,10 @@ namespace TMC_API.Connection
 
         public override void Connect()
         {
+           
             _ShouldListen = true;
             udpClient.Client.Bind(new IPEndPoint(IPAddress.Any, _ListenPort));
+            IsConnected = true;
             var from = new IPEndPoint(0, 0);
             var task = Task.Run(() =>
             {

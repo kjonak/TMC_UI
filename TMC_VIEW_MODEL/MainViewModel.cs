@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using TMC_API;
+using TMC_API.Connection;
 using TMC_VIEW_MODEL;
 
 
@@ -42,6 +43,8 @@ namespace TMC_VIEW_MODEL
 
     public partial class MainViewModel : ObservableObject
     {
+        private TMC_Parser? _TMC_Parser;
+
         [ObservableProperty]
         private TMC_Model _TMC_Model;
 
@@ -97,17 +100,24 @@ namespace TMC_VIEW_MODEL
             }
             SelectedVM.OnShow();
         }
-
+        private void InitializeConnection(Connection connection)
+        {
+            connection.Connect();
+            _TMC_Parser = new TMC_Parser(TMC_Model, connection);
+        }
         [RelayCommand]
         private void ConnectUDP()
         {
-           
+            var connection = new NetworkConnection(AppSettings.UDP_IP, AppSettings.UDP_Target_Port, AppSettings.UDP_Listen_Port);
+            InitializeConnection(connection);
             Console.WriteLine("Listening on: "+AppSettings.UDP_Listen_Port + " Sending to: " +AppSettings.UDP_IP+":"+ AppSettings.UDP_Target_Port);
         }
 
         [RelayCommand]
         private void ConnectSerial(string portName)
         {
+            var connection = new SerialConnection(portName, 115200);
+            InitializeConnection(connection);
             Console.WriteLine("Opening serial port " + portName);
         }
 
