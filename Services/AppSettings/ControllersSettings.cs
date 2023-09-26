@@ -17,18 +17,19 @@ namespace Services.AppSettings
     {
         public enum KeyboardControls
         {
-         ROLL_LEFT,
          ROLL_RIGHT,
+         ROLL_LEFT,
          PITCH_UP,
          PITCH_DOWN,
-         YAW_LEFT,
          YAW_RIGHT,
+         YAW_LEFT,
          FORWAD,
          BACKWARD,
-         UP,
-         DOWN,
+         RIGHT,
          LEFT,
-         RIGHT
+         UP,
+         DOWN
+
         }
 
         [ObservableProperty]
@@ -100,6 +101,8 @@ namespace Services.AppSettings
                 YawRightKey,
                 ForwardKey,
                 BackwardKey,
+                RightKey,
+                LeftKey,
                 DownKey,
                 UpKey
             };
