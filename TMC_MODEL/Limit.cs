@@ -14,5 +14,19 @@ namespace TMC_API
         private float _Min;
         [ObservableProperty]
         private float _Max;
+
+        public byte[] Serialize()
+        {
+            byte[] ret = new byte[sizeof(float) * 2];
+
+            var p = BitConverter.GetBytes(Min);
+            var i = BitConverter.GetBytes(Max);
+
+
+            Buffer.BlockCopy(p, 0, ret, 0, sizeof(float));
+            Buffer.BlockCopy(i, 0, ret, 4, sizeof(float));
+
+            return ret;
+        }
     }
 }
