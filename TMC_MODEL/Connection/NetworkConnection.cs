@@ -21,8 +21,12 @@ namespace TMC_API.Connection
             _ListenPort = ListenPort;
             _TargetIP = TargetIP;
             _TargetPort = TargetPort;
+            base.StartCalculatingStats();
         }
-
+        ~NetworkConnection()
+        {
+            base.StopCalculatingStats();
+        }
         public override void Connect()
         {
            
@@ -34,19 +38,30 @@ namespace TMC_API.Connection
             {
                 while (_ShouldListen)
                 {
+                    try { 
                     var recvBuffer = udpClient.Receive(ref from);
                     InvokeNewDataCallback(recvBuffer);
-                   
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
                 }
             });
         }
         public override void SendPacket(byte[] data)
         {
+            if(IsConnected == false)
+            {
+                return;
+            }
+            base.SendPacket(data);
             udpClient.Send(data, data.Length, _TargetIP, _TargetPort);
         }
         public override void Disconnect()
         {
             _ShouldListen = false;
+            IsConnected = false;
             udpClient.Close();
         }
     }
