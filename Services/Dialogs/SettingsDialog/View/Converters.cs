@@ -37,7 +37,6 @@ namespace Services.Dialogs.SettingsDialog.View
             {
                 case ROLL_LEFT:
                     return "Roll left";
-                    break;
                 case ROLL_RIGHT:
                     return "Roll right";
                 case PITCH_UP:
@@ -62,9 +61,9 @@ namespace Services.Dialogs.SettingsDialog.View
                     return "Right";
 
                 default:
-                    return "error";
+                    throw new NotImplementedException();
             }
-            return index.ToString();
+
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

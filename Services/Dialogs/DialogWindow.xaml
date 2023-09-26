@@ -8,7 +8,7 @@
              xmlns:SettingsDialog="clr-namespace:Services.Dialogs.SettingsDialog.View"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              mc:Ignorable="d" 
-            Title="DialogWindow" Height="450" Width="900"        
+            Title="DialogWindow" Height="470" Width="900"        
             WindowStartupLocation="CenterOwner"
             WindowStyle="None"
             ResizeMode="NoResize"
