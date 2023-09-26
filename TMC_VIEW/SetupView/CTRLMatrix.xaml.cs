@@ -73,10 +73,8 @@ namespace TMC_VIEW.SetupView
                     tb.HorizontalContentAlignment = HorizontalAlignment.Center;
                     tb.VerticalAlignment = VerticalAlignment.Center;
                     tb.VerticalContentAlignment = VerticalAlignment.Center;
-
                     Grid.SetColumn(tb, i + 1);
                     Grid.SetRow(tb, j+1);
-
                 }
 
                 ValueGrid.ColumnDefinitions[i + 1].Width = new GridLength(50);
@@ -94,12 +92,12 @@ namespace TMC_VIEW.SetupView
             if(selectedBox == null)
                 return;
 
-            float value;
-            string text = selectedBox.Text.Replace(".", ",");
-            if (!float.TryParse(text, out value))
-                value = 0;
+            //float value;
+            //string text = selectedBox.Text.Replace(".", ",");
+            //if (!float.TryParse(text, out value))
+            //    value = 0;
 
-            viewModel.CTRLMatrix[selectedBox.Index] = value;
+            //viewModel.CTRLMatrix[selectedBox.Index] = value;
         }
 
         private void Tb_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -108,6 +106,24 @@ namespace TMC_VIEW.SetupView
             e.Handled = !regex.IsMatch(e.Text);
         }
 
- 
+        private void ValueGrid_DataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+           
+            foreach (var children in ValueGrid.Children)
+            {
+                if(children.GetType() == typeof(FloatBox))
+                {
+                    FloatBox fb = (FloatBox)children;
+                    var path = "TMC_Model.CTRLMatrix[" +fb.Index+"]";
+                    Binding binding = new Binding();
+                    binding.Source = (SetupViewModel)this.DataContext;
+                    binding.Path = new PropertyPath(path);
+                    binding.UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged;
+                    binding.Mode = BindingMode.TwoWay;
+                    BindingOperations.SetBinding(fb, TextBox.TextProperty, binding);
+                }
+              
+            }
+        }
     }
 }

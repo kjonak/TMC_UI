@@ -41,7 +41,7 @@
                     <Label Grid.Column="1" Grid.Row="0" Content="Frequency [Hz]" HorizontalContentAlignment="Center"/>
 
                     <Label Grid.Row="1" Grid.Column="0" Content="System:"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" Width="40" Margin="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput ="TextBox_PreviewTextInput" Text="0"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Width="40" Margin="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput ="TextBox_PreviewTextInput" Text="{Binding Test}"/>
 
                     <Label Grid.Row="2" Grid.Column="0" Content="Read analog sensors:"/>
                     <TextBox Grid.Row="2" Grid.Column="1" Width="40" Margin="2" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewTextInput ="TextBox_PreviewTextInput" Text="0"/>
@@ -73,8 +73,8 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Content="Send" Command="{Binding SendCTRLMatrixCommand}" Grid.Column="0" Margin="5"/>
-            <Button Content="Reload" Command="{Binding GetCTRLMatrixCommand}" Grid.Column="1" Margin="5"/>
+            <Button Content="Send" Command="{Binding SendFrequencyCommand}" Grid.Column="0" Margin="5"/>
+            <Button Content="Reload" Command="{Binding GetFrequencyCommand}" Grid.Column="1" Margin="5"/>
         </Grid>
     </Grid>
 </UserControl>

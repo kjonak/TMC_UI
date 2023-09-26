@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -31,6 +32,7 @@ namespace TMC_VIEW.PIDTuningView.PID
             get { return (string)GetValue(HeaderProperty); }
             set { SetValue(HeaderProperty, value); }
         }
+
         public static readonly DependencyProperty HeaderProperty =
             DependencyProperty.Register("Header",
                 typeof(string), typeof(PIDTemplate));
@@ -44,8 +46,11 @@ namespace TMC_VIEW.PIDTuningView.PID
 
 
         public static readonly DependencyProperty kPProperty =
-       DependencyProperty.Register("kP",
-           typeof(double), typeof(PIDTemplate));
+        DependencyProperty.Register(
+            name: "kP",
+            propertyType: typeof(double),
+            ownerType: typeof(PIDTemplate),
+            typeMetadata: new FrameworkPropertyMetadata((double)0,FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
 
 
@@ -57,20 +62,29 @@ namespace TMC_VIEW.PIDTuningView.PID
 
 
         public static readonly DependencyProperty kIProperty =
-       DependencyProperty.Register("kI",
-           typeof(double), typeof(PIDTemplate));
+        DependencyProperty.Register(
+            name:"kI",
+            propertyType: typeof(double),
+            ownerType: typeof(PIDTemplate),
+            typeMetadata: new FrameworkPropertyMetadata((double)0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
 
         public double kD
         {
             get { return (double)GetValue(kDProperty); }
-            set { SetValue(kDProperty, value); }
+            set { 
+
+                SetValue(kDProperty, value); 
+            }
         }
 
 
         public static readonly DependencyProperty kDProperty =
-       DependencyProperty.Register("kD",
-           typeof(double), typeof(PIDTemplate));
+        DependencyProperty.Register(
+            name: "kD",
+            propertyType: typeof(double),
+            ownerType: typeof(PIDTemplate),
+            typeMetadata: new FrameworkPropertyMetadata((double)0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public double Imax
         {
@@ -80,20 +94,26 @@ namespace TMC_VIEW.PIDTuningView.PID
 
 
         public static readonly DependencyProperty ImaxProperty =
-       DependencyProperty.Register("Imax",
-           typeof(double), typeof(PIDTemplate));
+        DependencyProperty.Register(
+            name: "Imax",
+            propertyType: typeof(double),
+            ownerType: typeof(PIDTemplate),
+            typeMetadata: new FrameworkPropertyMetadata((double)0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
 
         public double L
         {
             get { return (double)GetValue(LProperty); }
-            set { SetValue(LProperty, value); }
+            set {  SetValue(LProperty, value);}
         }
 
 
         public static readonly DependencyProperty LProperty =
-       DependencyProperty.Register("L",
-           typeof(double), typeof(PIDTemplate));
+        DependencyProperty.Register(
+            name: "L",
+            propertyType: typeof(double),
+            ownerType: typeof(PIDTemplate),
+            typeMetadata: new FrameworkPropertyMetadata((double)0, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -101,6 +121,7 @@ namespace TMC_VIEW.PIDTuningView.PID
             e.Handled = !regex.IsMatch(e.Text);
 
         }
+
     }
 }
 

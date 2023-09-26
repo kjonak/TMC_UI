@@ -123,8 +123,8 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Button Content="Send" Command="{Binding SendCTRLMatrixCommand}" Grid.Column="0" Margin="5"/>
-            <Button Content="Reload" Command="{Binding GetCTRLMatrixCommand}" Grid.Column="1" Margin="5"/>
+            <Button Content="Send" Command="{Binding SendLimitsCommand}" Grid.Column="0" Margin="5"/>
+            <Button Content="Reload" Command="{Binding GetLimitsCommand}" Grid.Column="1" Margin="5"/>
         </Grid>
     </Grid>
 </UserControl>

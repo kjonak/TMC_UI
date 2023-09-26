@@ -14,10 +14,10 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace TMC_VIEW.Widgets
+namespace TMC_VIEW.CustomWidgets
 {
     /// <summary>
-    /// Logika interakcji dla klasy BatteryWidget.xaml
+    /// Interaction logic for BatteryWidget.xaml
     /// </summary>
     public partial class BatteryWidget : UserControl
     {
@@ -41,7 +41,6 @@ namespace TMC_VIEW.Widgets
 
         private static void BatteryCriticalLevelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
             BatteryLevelChanged(d, e);
         }
         private double prev_diff = 0;
@@ -73,14 +72,10 @@ namespace TMC_VIEW.Widgets
                     return;
                 obj.prev_diff = dif;
                 obj.animation.Stop();
+                obj.animation.Duration = new Duration(TimeSpan.FromSeconds(dif * 1));
                 obj.animation.Begin();
-
             }
-
         }
-
-
-
         private static int LinearInterp(int start, int end, double percentage) => start + (int)Math.Round(percentage * (end - start));
 
         private static Color ColorInterp(Color start, Color end, double percentage) =>

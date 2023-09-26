@@ -23,11 +23,11 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <pid:PIDTemplate Grid.Column="0" Header="Roll" />
-                <pid:PIDTemplate Grid.Column="1" Header="Pitch"/>
-                <pid:PIDTemplate Grid.Column="2" Header="Yaw" />
-                <pid:PIDTemplate Grid.Column="3" Header="Vertical"/>
-            </Grid>
+                    <pid:PIDTemplate Grid.Column="0" Header="Roll" kP="{Binding TMC_Model.PIDRoll.KP}" kI="{Binding TMC_Model.PIDRoll.KI}" kD="{Binding TMC_Model.PIDRoll.KD}" L="{Binding TMC_Model.PIDRoll.KL}" Imax="{Binding TMC_Model.PIDRoll.IMax}"/>
+                    <pid:PIDTemplate Grid.Column="1" Header="Pitch" kP="{Binding TMC_Model.PIDPitch.KP}" kI="{Binding TMC_Model.PIDPitch.KI}" kD="{Binding TMC_Model.PIDPitch.KD}" L="{Binding TMC_Model.PIDPitch.KL}" Imax="{Binding TMC_Model.PIDPitch.IMax}"/>
+                    <pid:PIDTemplate Grid.Column="2" Header="Yaw"  kP="{Binding TMC_Model.PIDYaw.KP}" kI="{Binding TMC_Model.PIDYaw.KI}" kD="{Binding TMC_Model.PIDYaw.KD}" L="{Binding TMC_Model.PIDYaw.KL}" Imax="{Binding TMC_Model.PIDYaw.IMax}"/>
+                    <pid:PIDTemplate Grid.Column="3" Header="Vertical" kP="{Binding TMC_Model.PIDVertical.KP}" kI="{Binding TMC_Model.PIDVertical.KI}" kD="{Binding TMC_Model.PIDVertical.KD}" L="{Binding TMC_Model.PIDVertical.KL}" Imax="{Binding TMC_Model.PIDVertical.IMax}"/>
+                </Grid>
             </StackPanel>
 
             <Grid Grid.Row="2" Width="{Binding ActualWidth, ElementName=PIDValues}" HorizontalAlignment="Stretch" Height="35" Background="{DynamicResource SurfaceBrush}" Margin="0 5">
@@ -35,8 +35,8 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <Button Grid.Column="0" Content="Send" Margin="5" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding PIDSaveBtnCommand}"/>
-                <Button Grid.Column="1" Content="Reload" Margin="5" Command="{Binding PIDReloadBtnCommand}"/>
+                <Button Grid.Column="0" Content="Send" Margin="5" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" Command="{Binding SendPIDCommand}"/>
+                <Button Grid.Column="1" Content="Reload" Margin="5" Command="{Binding GetPIDCommand}"/>
             </Grid>
         
 

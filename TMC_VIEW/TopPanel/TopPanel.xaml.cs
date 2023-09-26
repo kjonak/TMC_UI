@@ -26,9 +26,18 @@ namespace TMC_VIEW.TopPanel
         {
             InitializeComponent();
         }
-        private void COM_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void COM_DropDownOpened(object sender, EventArgs e)
         {
-            COM.ItemsSource = SerialPort.GetPortNames();
+            List<string> src = new List<string>();
+            var t = SerialPort.GetPortNames();
+            foreach (var name in t)
+            {
+                if (!src.Contains(name))
+                {
+                    src.Add(name);
+                }
+            }
+            COM.ItemsSource = src;// SerialPort.GetPortNames();
         }
 
         private void IPBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -43,5 +52,7 @@ namespace TMC_VIEW.TopPanel
             Regex regex = new Regex(@"^?[0-9]");
             e.Handled = !regex.IsMatch(e.Text);
         }
+
+
     }
 }

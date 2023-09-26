@@ -9,10 +9,11 @@
         xmlns:sidepanel="clr-namespace:TMC_VIEW.SidePanel"
         xmlns:viewmodels="clr-namespace:TMC_VIEW_MODEL;assembly=TMC_VIEW_MODEL"
         xmlns:setupview="clr-namespace:TMC_VIEW.SetupView"
-        xmlns:pidtuningview="clr-namespace:TMC_VIEW.PIDTuningView" xmlns:controlview="clr-namespace:TMC_VIEW.ControlView"
+        xmlns:pidtuningview="clr-namespace:TMC_VIEW.PIDTuningView" xmlns:controlview="clr-namespace:TMC_VIEW.ControlView" xmlns:boatstatus="clr-namespace:TMC_VIEW.BoatStatus"
         mc:Ignorable="d"
         StateChanged="Window_StateChanged"
         Background="{DynamicResource BackgroundBrush}"
+        Closing="Window_Closing"
         Title="MainWindow" Height="450" Width="800">
 
     <WindowChrome.WindowChrome>
@@ -60,6 +61,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="2"/>
+                    
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <sidepanel:SidePanel Grid.Column="0" Width="150"/>
@@ -69,21 +71,35 @@
                 </Grid>
 
             </Grid>
-            <Grid Grid.Row="3" Background="{DynamicResource SurfaceBrush}" Margin="5 10 0 20">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Label Content="Logger" FontSize="{DynamicResource TitleFontSize}" FontWeight="{DynamicResource TitleFontWeight}"/>
-                    <Border Grid.Row="1" BorderThickness="2" BorderBrush="{DynamicResource SecondaryColorBrush}" Margin="5" CornerRadius="5">
-                    <ScrollViewer x:Name="Scroller" Grid.Row="1" Background="{DynamicResource SurfaceBrush}"  Padding="0" Margin="3" ScrollChanged="Scroller_ScrollChanged" >
-                        <TextBlock  Grid.Row="1" Text="{Binding Diary}" Margin="5" TextWrapping="WrapWithOverflow" Foreground="{DynamicResource ForegroundBrush}" />
-                    </ScrollViewer>
-                    </Border>
+            <Grid Grid.Row="3" Margin="5 10 0 20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" Background="{DynamicResource SurfaceBrush}" Margin="0 0 5 0">
+                    <boatstatus:BoatStatusView/>
                 </Grid>
-    
+                <Grid Grid.Column="1" Background="{DynamicResource SurfaceBrush}" Margin="0">
+                    <local:ControllerView DataContext="{Binding ControllerVM}"/>
+                </Grid>
+                <Grid Grid.Column="2" Background="{DynamicResource SurfaceBrush}" Margin="5 0 0 0">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <Label Content="Logger" FontSize="{DynamicResource TitleFontSize}" FontWeight="{DynamicResource TitleFontWeight}"/>
+                        <Border Grid.Row="1" BorderThickness="2" BorderBrush="{DynamicResource SecondaryColorBrush}" Margin="5" CornerRadius="5">
+                            <ScrollViewer x:Name="Scroller" Grid.Row="1" Background="{DynamicResource SurfaceBrush}"  Padding="0" Margin="3" ScrollChanged="Scroller_ScrollChanged" >
+                                <TextBlock  Grid.Row="1" Text="{Binding Diary}" Margin="5" TextWrapping="WrapWithOverflow" Foreground="{DynamicResource ForegroundBrush}" />
+                            </ScrollViewer>
+                        </Border>
+                    </Grid>
+
+                </Grid>
             </Grid>
+           
         </Grid>
 
 

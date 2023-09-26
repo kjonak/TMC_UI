@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using System.Xml;
 using TMC_API;
 using TMC_API.Connection;
 using TMC_VIEW_MODEL;
@@ -43,6 +44,7 @@ namespace TMC_VIEW_MODEL
 
     public partial class MainViewModel : ObservableObject
     {
+        [ObservableProperty]
         private TMC_Parser? _TMC_Parser;
 
         [ObservableProperty]
@@ -60,6 +62,8 @@ namespace TMC_VIEW_MODEL
 
         [ObservableProperty]
         private BaseTMCViewModel _SelectedVM;
+        [ObservableProperty]
+        ControllerViewModel _ControllerVM;
 
         private ControlWriter _ControlWriter = new ControlWriter();
         private string _diary;
@@ -102,23 +106,46 @@ namespace TMC_VIEW_MODEL
         }
         private void InitializeConnection(Connection connection)
         {
-            connection.Connect();
-            _TMC_Parser = new TMC_Parser(TMC_Model, connection);
+            Connection.Connect();
+            if(Connection.IsConnected)
+            {
+                TMC_Parser = new TMC_Parser(TMC_Model, connection);
+                Console.WriteLine("Connection established!");
+            } else
+            {
+                Console.WriteLine("Could not establish connection");
+            }
+                
         }
+
+        [ObservableProperty]
+        Connection connection;
+
         [RelayCommand]
         private void ConnectUDP()
         {
-            var connection = new NetworkConnection(AppSettings.UDP_IP, AppSettings.UDP_Target_Port, AppSettings.UDP_Listen_Port);
-            InitializeConnection(connection);
+            Connection = new NetworkConnection(AppSettings.UDP_IP, AppSettings.UDP_Target_Port, AppSettings.UDP_Listen_Port);
+            InitializeConnection(Connection);
             Console.WriteLine("Listening on: "+AppSettings.UDP_Listen_Port + " Sending to: " +AppSettings.UDP_IP+":"+ AppSettings.UDP_Target_Port);
         }
-
+        [RelayCommand]
+        private void Disconnect()
+        {
+            Connection.Disconnect();
+            Console.WriteLine("Connection closed");
+        }
         [RelayCommand]
         private void ConnectSerial(string portName)
         {
-            var connection = new SerialConnection(portName, 115200);
-            InitializeConnection(connection);
+            if(portName == null)
+            {
+                Console.WriteLine("Please select serial port");
+                return;
+            }
             Console.WriteLine("Opening serial port " + portName);
+            Connection = new SerialConnection(portName, AppSettings.BaudRate);
+            InitializeConnection(Connection);
+
         }
 
         [RelayCommand]
@@ -134,15 +161,20 @@ namespace TMC_VIEW_MODEL
         {
             Diary = value;
         }
+        public void OnClose()
+        {
+            Connection.Disconnect();
+        }
         public MainViewModel(AppSettings appSettings)
         {
             _appSettings = appSettings;
             _diary = new string("");
-
+            Connection = new Connection();
             _ControlWriter.Writer = write;
             Console.SetOut(_ControlWriter);
             TMC_Model = new TMC_Model();
 
+            ControllerVM = new ControllerViewModel(TMC_Model, _appSettings);
             SetupVM = new SetupViewModel(TMC_Model);
             PIDTuningVM = new PIDTuningViewModel(TMC_Model);
             ControlVM = new ControlViewModel(TMC_Model);

@@ -8,5 +8,4 @@
     <Color x:Key="ForegroundColor">White</Color>
     <sys:Double x:Key="SurfaceOpacity">0.2</sys:Double>
 
-
 </ResourceDictionary>

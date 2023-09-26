@@ -37,4 +37,32 @@ namespace TMC_VIEW.TopPanel
             throw new NotImplementedException();
         }
     }
+
+    public class BoolReversed : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return!(bool)value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+
+    }
+
+    public class BooleanToVisibilityReversed : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return ((bool)value == true) ? Visibility.Collapsed : Visibility.Visible;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return ((Visibility)value == Visibility.Collapsed) ? false : true;
+        }
+
+    }
 }

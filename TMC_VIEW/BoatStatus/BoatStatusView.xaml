@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="TMC_VIEW.BoatStatus.BoatStatusView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TMC_VIEW.BoatStatus" xmlns:customwidgets="clr-namespace:TMC_VIEW.CustomWidgets"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Label Content="Okoń status" FontSize="{DynamicResource TitleFontSize}" FontWeight="{DynamicResource TitleFontWeight}"/>
+        <Grid Grid.Row="1" Margin="5" Background="{DynamicResource SurfaceBrush}">
+            <Grid Margin="5">
+
+                <customwidgets:BatteryWidget Width="100" Height="50" HorizontalAlignment="Left" BatteryLevel="50" BatteryCritical="50"/>
+
+            </Grid>
+        </Grid>
+     </Grid>
+</UserControl>

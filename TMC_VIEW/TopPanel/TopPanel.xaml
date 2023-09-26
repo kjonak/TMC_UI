@@ -5,10 +5,13 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:TMC_VIEW.TopPanel" xmlns:converters="clr-namespace:TMC_VIEW.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="1500">
     <UserControl.Resources>
         <ResourceDictionary>
             <local:ConnectionPanelVisibilityConverter x:Key="ConnectionPanelVisibilityConverter"/>
+            <local:BoolReversed x:Key="BoolReversed"/>
+            <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
+            <local:BooleanToVisibilityReversed x:Key="Bool2VisibilityReversed"/>
             <BitmapImage x:Key="SettingsIcon" UriSource="Icons/setup_icon.png"/>
         </ResourceDictionary>
     </UserControl.Resources>
@@ -25,33 +28,45 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
-               
+
+                <StackPanel Orientation="Horizontal" Grid.Column="0" HorizontalAlignment="Left" Margin="50 0"> 
+                    <Label Content="TX Rate: "/>
+                    <Label Content="{Binding Connection.TX_Rate}" ContentStringFormat=" {0:0.00} [kB/s]" HorizontalContentAlignment="Right"/>
+
+                    <Label Content="RX Rate"/>
+                    <Label Content="{Binding Connection.RX_Rate}" ContentStringFormat=" {0:0.00} [kB/s]" HorizontalContentAlignment="Right"/>
+                    <Label Content="Invalid packets: "/>
+                    <Label Content="{Binding TMC_Parser.InvalidPackets}" HorizontalContentAlignment="Right"/>
+
+                </StackPanel>
                 <Grid Grid.Column="2" Background="Transparent"  VerticalAlignment="Center" HorizontalAlignment="Right">
                     
                     <Grid Visibility="{Binding AppSettings.ConnectionMethod, Converter={StaticResource ConnectionPanelVisibilityConverter}, ConverterParameter=UDP}">
                         
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Target IP: "/>
-                            <TextBox Text="{Binding AppSettings.UDP_IP}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="100" Margin="0 1" PreviewTextInput="IPBox_PreviewTextInput"/>
+                            <TextBox IsEnabled="{Binding Connection.IsConnected, Converter={StaticResource BoolReversed}}" Text="{Binding AppSettings.UDP_IP}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="100" Margin="0 1" PreviewTextInput="IPBox_PreviewTextInput"/>
 
                             <Label Content="Target port: "/>
-                            <TextBox Text="{Binding AppSettings.UDP_Target_Port}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="50" Margin="0 1" PreviewTextInput="BaudRateBox_PreviewTextInput"/>
+                            <TextBox IsEnabled="{Binding Connection.IsConnected, Converter={StaticResource BoolReversed}}" Text="{Binding AppSettings.UDP_Target_Port}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="50" Margin="0 1" PreviewTextInput="BaudRateBox_PreviewTextInput"/>
                             <Label Content="Listen port: "/>
-                            <TextBox Text="{Binding AppSettings.UDP_Listen_Port}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="50" Margin="0 1" PreviewTextInput="BaudRateBox_PreviewTextInput"/>
-                            <Button Content="Connect" Margin="10 0"   Background="{DynamicResource SecondaryColorBrush}" Height="25" Width="55" Command="{Binding ConnectUDPCommand}"/>
+                            <TextBox IsEnabled="{Binding Connection.IsConnected, Converter={StaticResource BoolReversed}}" Text="{Binding AppSettings.UDP_Listen_Port}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="50" Margin="0 1" PreviewTextInput="BaudRateBox_PreviewTextInput"/>
+                            <Button Content="Connect" Margin="10 0" Visibility="{Binding Connection.IsConnected, Converter={StaticResource Bool2VisibilityReversed}}"   Background="{DynamicResource SecondaryColorBrush}" Height="25" Width="68" Command="{Binding ConnectUDPCommand}"/>
+                            <Button Content="Disconnect" Margin="10 0" Visibility="{Binding Connection.IsConnected, Converter={StaticResource Bool2Visibility}}"   Background="{DynamicResource SecondaryColorBrush}" Height="25" Width="68" Command="{Binding DisconnectCommand}"/>
                         </StackPanel>
                     </Grid>
-                    <Grid Visibility="{Binding AppSettings.ConnectionMethod, Converter={StaticResource ConnectionPanelVisibilityConverter}, ConverterParameter=Serial}">
+                    <Grid d:Visibility="Collapsed" Visibility="{Binding AppSettings.ConnectionMethod, Converter={StaticResource ConnectionPanelVisibilityConverter}, ConverterParameter=Serial}">
                         <StackPanel Orientation="Horizontal">
                             <Label Content="Port:"/>
-                            <ComboBox VerticalAlignment="Center" Margin="5 0" Grid.Column="1" Width="100" Name="COM" PreviewMouseLeftButtonDown ="COM_MouseLeftButtonDown" />
+                            <ComboBox IsEnabled="{Binding Connection.IsConnected, Converter={StaticResource BoolReversed}}" VerticalAlignment="Center" Margin="5 0" Grid.Column="1" Width="100" Name="COM" DropDownOpened="COM_DropDownOpened"/>
                            
                             <Label Content="Baud rate: "/>
-                            <TextBox Text="{Binding AppSettings.BaudRate}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Width="50" Margin="0 1" PreviewTextInput="BaudRateBox_PreviewTextInput"/>
-                            <Button Content="Connect" Margin="10 0"   Background="{DynamicResource SecondaryColorBrush}" Height="25" Width="55" Command="{Binding ConnectSerialCommand}" CommandParameter="{Binding ElementName=COM, Path=SelectedValue}"/>
+                            <TextBox Text="{Binding AppSettings.BaudRate}" HorizontalContentAlignment="Center"  IsEnabled="{Binding Connection.IsConnected, Converter={StaticResource BoolReversed}}" VerticalContentAlignment="Center" Width="50" Margin="0 1" PreviewTextInput="BaudRateBox_PreviewTextInput"/>
+                            <Button Content="Connect" Margin="10 0"  Visibility="{Binding Connection.IsConnected, Converter={StaticResource Bool2VisibilityReversed}}" Background="{DynamicResource SecondaryColorBrush}" Height="25" Width="68" Command="{Binding ConnectSerialCommand}" CommandParameter="{Binding ElementName=COM, Path=SelectedValue}"/>
+                            <Button Content="Disconnect" Margin="10 0" Visibility="{Binding Connection.IsConnected, Converter={StaticResource Bool2Visibility}}"  Background="{DynamicResource SecondaryColorBrush}" Height="25" Width="68" Command="{Binding DisconnectCommand}" CommandParameter="{Binding ElementName=COM, Path=SelectedValue}"/>
 
                         </StackPanel>
                     </Grid>

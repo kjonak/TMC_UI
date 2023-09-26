@@ -6,7 +6,9 @@
              xmlns:local="clr-namespace:TMC_VIEW.SetupView"
              mc:Ignorable="d" 
              d:Foreground="AliceBlue"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" 
+             DataContextChanged="ValueGrid_DataContextChanged"
+             >
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -15,9 +17,26 @@
         </Grid.RowDefinitions>
         <Label Content="Control matrix" FontWeight="{DynamicResource TitleFontWeight}" FontSize="{DynamicResource TitleFontSize}"/>
 
-        <Grid x:Name="ValueGrid" Grid.Row="1"  Background="{DynamicResource SurfaceBrush}">
+        <Grid x:Name="ValueGrid" Grid.Row="1"  Background="{DynamicResource SurfaceBrush}" >
             
         </Grid>
+        <!--<ListView Grid.Row="1" ItemsSource="{Binding CTRLMatrix}" Focusable="False" Background="Transparent" BorderThickness="0">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="6"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Focusable" Value="false"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="ListViewItem">
+                    <TextBox Focusable="True" Text="0" Width="30" Margin="2"  HorizontalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Stretch" PreviewTextInput="Tb_PreviewTextInput"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>-->
         <Grid Grid.Row="2" Background="{DynamicResource SurfaceBrush}" Margin="0 5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>

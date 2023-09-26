@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="TMC_VIEW.ControllerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:TMC_VIEW"
+             xmlns:converters="clr-namespace:TMC_VIEW.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="Bool2Visibility"/>
+        <converters:BoolToVisibilityReversed x:Key="Bool2VisibilityReversed"/>
+        <converters:BoolReversed x:Key="BoolReversed"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Label Content="Controller" FontSize="{DynamicResource TitleFontSize}" FontWeight="{DynamicResource TitleFontWeight}"/>
+        <Grid Grid.Row="1" Margin="5" Background="{DynamicResource SurfaceBrush}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid VerticalAlignment="Center" Margin="10 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Label Content="Controller: "/>
+                    <ComboBox IsEnabled="{Binding Armed, Converter={StaticResource BoolReversed}}" x:Name="cb" DropDownOpened="ComboBox_DropDownOpened" Grid.Column="1" SelectedIndex="0" SelectedItem="{Binding SelectedController}" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0 5">
+                    
+                </ComboBox>
+                
+                <Label Grid.Row="1" Content="Mode: "/>
+                <ComboBox Grid.Row="1" Grid.Column="1" SelectedIndex="0" SelectedItem="{Binding SelectedMode}" Width="100" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="0 5">
+                    <ComboBoxItem Content="Stable" IsEnabled="{Binding TMC_Model.ServiceModeOn, Converter={StaticResource BoolReversed}}"/>
+                        <ComboBoxItem Content="Rate" IsEnabled="{Binding TMC_Model.ServiceModeOn, Converter={StaticResource BoolReversed}}"/>
+                        <ComboBoxItem Content="Service" IsEnabled="{Binding TMC_Model.ServiceModeOn}"/>
+                </ComboBox>
+            </Grid>
+                <Button Command="{Binding ArmCommand}" Grid.Column="1" Content="ARM"  Width="80" Height="55.5" Margin="0 10 10 10" Visibility="{Binding Armed, Converter={StaticResource Bool2VisibilityReversed}}"/>
+                <Button Command="{Binding DisarmCommand}" Grid.Column="1" Content="DISARM" Width="80" Height="55.5" Margin="0 10 10 10" Visibility="{Binding Armed, Converter={StaticResource Bool2Visibility}}"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>

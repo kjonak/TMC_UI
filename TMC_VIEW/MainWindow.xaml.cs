@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using TMC_VIEW_MODEL;
 
 namespace TMC_VIEW
 {
@@ -43,6 +44,12 @@ namespace TMC_VIEW
             if(Scroller.IsMouseOver == false)
                 Scroller.ScrollToEnd();
 
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var vm = (MainViewModel)this.DataContext;
+            vm.OnClose();
         }
     }
 }

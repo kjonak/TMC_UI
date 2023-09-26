@@ -7,6 +7,59 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-        <Label Content="Control view"/>
+        <ListView ItemsSource="{Binding TMC_Model.Variables}" Background="{DynamicResource SurfaceBrush}" Margin="10" BorderThickness="0" HorizontalAlignment="Left">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="3" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+               
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="Focusable" Value="False" />
+      
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+
+                                <Border Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                    <ContentPresenter Content="{TemplateBinding Content}" ContentTemplate="{TemplateBinding ContentTemplate}" Margin="{TemplateBinding Padding}" />
+                                </Border>
+
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter  Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{DynamicResource SecondaryColor}" Opacity="0.2"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                    
+                    
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="ListViewItem">
+                    <Grid Margin="5" Background="{DynamicResource SurfaceBrush}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="200"/>
+                            <ColumnDefinition Width="100"/>
+                        </Grid.ColumnDefinitions>
+                        <Label VerticalContentAlignment="Center">
+                            <TextBlock Text="{Binding FriendlyName}"/>
+                        </Label>
+                        <Label Grid.Column="1" Content="{Binding Value}" ContentStringFormat=" {0:0.0000}" VerticalContentAlignment="Center"/>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+            
+        </ListView>
     </Grid>
 </UserControl>
